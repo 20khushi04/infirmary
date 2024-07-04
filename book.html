@@ -1,0 +1,182 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Slot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .booking-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            background-color: #00695c;
+            padding: 10px;
+        }
+
+        header h1 {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .booking-container h1 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .booking-container label {
+            font-weight: 500;
+        }
+
+        .booking-container input,
+        .booking-container select,
+        .booking-container textarea {
+            margin-bottom: 15px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .booking-container button {
+            background-color: #009688;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            width: 100%;
+        }
+
+        .booking-container button:hover {
+            background-color: #00796b;
+        }
+
+        .booking-container p {
+            margin-top: 20px;
+        }
+
+        .booking-container p a {
+            color: #009688;
+            text-decoration: none;
+        }
+
+        .booking-container p a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            background-color: #00695c;
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: #fff;
+        }
+
+        .contact-container {
+            margin-top: 50px;
+        }
+
+        .contact-container h2 {
+            text-align: center;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .contact-container .form-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .contact-container .form-group input {
+            width: 48%;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="text-center">
+        <h1>Thapar Infirmary - Book a Slot</h1>
+    </header>
+    <div class="container booking-container">
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="timeSlot">Time Slot:</label>
+                <select id="timeSlot" name="timeSlot" class="form-control" required>
+                    <option value="morning">Morning (9:00 AM - 12:00 PM)</option>
+                    <option value="afternoon">Afternoon (12:00 PM - 3:00 PM)</option>
+                    <option value="evening">Evening (3:00 PM - 6:00 PM)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="problemDescription">Problem Description:</label>
+                <textarea id="problemDescription" name="problemDescription" class="form-control" required></textarea>
+            </div>
+            <input type="hidden" name="database" value="university_dispensary_bookings">
+            <button type="submit" class="btn btn-primary btn-block">Book</button>
+        </form>
+        <p class="text-center mt-4">If you haven't registered, <a href="register.html">click here to register</a>.</p>
+    </div>
+
+    <div class="footer">
+        Book a slot with us @thapar infirmary.
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        document.getElementById('bookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch('/insert', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.message === 'Booking created successfully') {
+                    window.location.href = '/';
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+
+</html>

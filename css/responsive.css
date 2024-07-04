@@ -1,0 +1,30 @@
+@media (max-width: 991px) {
+    .custom_nav-container .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .custom_nav-container .navbar-toggler:focus,
+    .custom_nav-container .navbar-toggler:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .custom_nav-container .navbar-nav .nav-link {
+        font-size: 16px;
+    }
+
+    .detail-box h1 {
+        font-size: 40px;
+    }
+
+    .detail-box p {
+        font-size: 18px;
+    }
+
+    .heading_container h2 {
+        font-size: 30px;
+    }
+
+    .heading_container p {
+        font-size: 18px;
+    }
+}
